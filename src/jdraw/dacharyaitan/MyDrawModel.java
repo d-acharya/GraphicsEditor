@@ -5,10 +5,13 @@
 
 package jdraw.dacharyaitan;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import jdraw.framework.DrawCommandHandler;
 import jdraw.framework.DrawModel;
+import jdraw.framework.DrawModelEvent;
 import jdraw.framework.DrawModelListener;
 import jdraw.framework.Figure;
 import jdraw.std.EmptyDrawCommandHandler;
@@ -21,36 +24,35 @@ import jdraw.std.EmptyDrawCommandHandler;
  *
  */
 public class MyDrawModel implements DrawModel {
-
+	private List<Figure> figures = new ArrayList<Figure>();
+	private List<DrawModelListener> listeners = new ArrayList<DrawModelListener>();
+	
 	@Override
 	public void addFigure(Figure f) {
-		// TODO to be implemented
-		System.out.println("StdDrawModel.addFigure has to be implemented");
+		figures.add(f);
+		// TODO notify listeners that a figure was added
+		// DrawModelEvent event = new DrawModelEvent(this, f, FIGURE_ADDED);
 	}
 
 	@Override
 	public Iterable<Figure> getFigures() {
-		// TODO to be implemented  
-		System.out.println("StdDrawModel.getFigures has to be implemented");
-		return new LinkedList<Figure>(); // Only guarantees, that the application starts -- has to be replaced !!!
+		return figures;
 	}
 
 	@Override
 	public void removeFigure(Figure f) {
-		// TODO to be implemented  
-		System.out.println("StdDrawModel.removeFigure has to be implemented");
+		figures.remove(f);
+		// TODO notify listeners that a figure was deleted
 	}
 
 	@Override
 	public void addModelChangeListener(DrawModelListener listener) {
-		// TODO to be implemented  
-		System.out.println("StdDrawModel.addModelChangeListener has to be implemented");
+		listeners.add(listener);
 	}
 
 	@Override
 	public void removeModelChangeListener(DrawModelListener listener) {
-		// TODO to be implemented  
-		System.out.println("StdDrawModel.removeModelChangeListener has to be implemented");
+		listeners.remove(listener);
 	}
 
 	/** The draw command handler. Initialized here with a dummy implementation. */
@@ -73,8 +75,8 @@ public class MyDrawModel implements DrawModel {
 
 	@Override
 	public void removeAllFigures() {
-		// TODO to be implemented  
-		System.out.println("StdDrawModel.removeAllFigures has to be implemented");
+		figures.clear();
+		// TODO notify listeners that all figures were deleted
 	}
 
 }
