@@ -32,6 +32,8 @@ public class MyDrawModel implements DrawModel {
 	@Override
 	public void addFigure(Figure f) {
 		figures.add(f);
+		RectListener listener = new RectListener(this);
+		f.addFigureListener(listener);
 		DrawModelEvent event = new DrawModelEvent(this, f, Type.FIGURE_ADDED);
 		fire(event);
 	}
