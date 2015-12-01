@@ -12,6 +12,7 @@ import java.util.List;
 import jdraw.framework.DrawCommandHandler;
 import jdraw.framework.DrawModel;
 import jdraw.framework.DrawModelEvent;
+import jdraw.framework.DrawModelEvent.Type;
 import jdraw.framework.DrawModelListener;
 import jdraw.framework.Figure;
 import jdraw.std.EmptyDrawCommandHandler;
@@ -30,8 +31,8 @@ public class MyDrawModel implements DrawModel {
 	@Override
 	public void addFigure(Figure f) {
 		figures.add(f);
-		// TODO notify listeners that a figure was added
-		// DrawModelEvent event = new DrawModelEvent(this, f, FIGURE_ADDED);
+		DrawModelEvent event = new DrawModelEvent(this, f, Type.FIGURE_ADDED);
+		fire(event);
 	}
 
 	@Override
@@ -42,7 +43,8 @@ public class MyDrawModel implements DrawModel {
 	@Override
 	public void removeFigure(Figure f) {
 		figures.remove(f);
-		// TODO notify listeners that a figure was deleted
+		DrawModelEvent event = new DrawModelEvent(this, f, Type.FIGURE_REMOVED);
+		fire(event);
 	}
 
 	@Override
@@ -53,6 +55,13 @@ public class MyDrawModel implements DrawModel {
 	@Override
 	public void removeModelChangeListener(DrawModelListener listener) {
 		listeners.remove(listener);
+	}
+	
+	// Fire an event, i.e. notify all listeners
+	public void fire(DrawModelEvent e){
+		for (int i=0; i<listeners.size(); i++){
+			listeners.get(i).modelChanged(e);
+		}
 	}
 
 	/** The draw command handler. Initialized here with a dummy implementation. */
@@ -74,9 +83,11 @@ public class MyDrawModel implements DrawModel {
 	}
 
 	@Override
+	// Use removeFigure() instead of clear to notify the listeners for each removed figure.
 	public void removeAllFigures() {
-		figures.clear();
-		// TODO notify listeners that all figures were deleted
+		for (int i=0; i< figures.size(); i++){
+			removeFigure(figures.get(i));
+		}
 	}
 
 }
