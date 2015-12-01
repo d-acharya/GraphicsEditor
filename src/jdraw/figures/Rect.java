@@ -9,9 +9,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
 
 import jdraw.framework.Figure;
+import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
 import jdraw.framework.FigureListener;
 
@@ -26,6 +28,11 @@ public class Rect implements Figure {
 	 * Use the java.awt.Rectangle in order to save/reuse code.
 	 */
 	private java.awt.Rectangle rectangle;
+	
+	/**
+	 * Store all listeners in an arraylist so that they can be added, removed and notified.
+	 */
+	private List<FigureListener> listeners = new ArrayList<FigureListener>();
 	
 	/**
 	 * Create a new rectangle of the given dimension.
@@ -84,12 +91,12 @@ public class Rect implements Figure {
 
 	@Override
 	public void addFigureListener(FigureListener listener) {
-		// TODO Auto-generated method stub
+		listeners.add(listener);
 	}
 
 	@Override
 	public void removeFigureListener(FigureListener listener) {
-		// TODO Auto-generated method stub
+		listeners.remove(listener);
 	}
 
 	@Override

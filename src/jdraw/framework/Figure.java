@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ import java.util.List;
  * @version 2.5
  */
 public interface Figure extends Serializable, Cloneable {
+	List<FigureListener> listeners = new ArrayList<FigureListener>();
 
 	/**
 	 * draw is called when the figure has to be drawn.
