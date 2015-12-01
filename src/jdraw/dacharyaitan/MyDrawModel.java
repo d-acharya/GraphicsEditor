@@ -6,7 +6,6 @@
 package jdraw.dacharyaitan;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import jdraw.framework.DrawCommandHandler;
@@ -15,6 +14,8 @@ import jdraw.framework.DrawModelEvent;
 import jdraw.framework.DrawModelEvent.Type;
 import jdraw.framework.DrawModelListener;
 import jdraw.framework.Figure;
+import jdraw.framework.FigureEvent;
+import jdraw.framework.FigureListener;
 import jdraw.std.EmptyDrawCommandHandler;
 
 /**
@@ -25,15 +26,14 @@ import jdraw.std.EmptyDrawCommandHandler;
  * @author Dinesh Acharya and Isabelle Tan
  *
  */
-public class MyDrawModel implements DrawModel {
+public class MyDrawModel implements DrawModel, FigureListener {
 	private List<Figure> figures = new ArrayList<Figure>();
 	private List<DrawModelListener> listeners = new ArrayList<DrawModelListener>();
 
 	@Override
 	public void addFigure(Figure f) {
 		figures.add(f);
-		RectListener listener = new RectListener(this);
-		f.addFigureListener(listener);
+		f.addFigureListener(this);
 		DrawModelEvent event = new DrawModelEvent(this, f, Type.FIGURE_ADDED);
 		fire(event);
 	}
@@ -100,6 +100,13 @@ public class MyDrawModel implements DrawModel {
 		figures.clear();
 		DrawModelEvent event = new DrawModelEvent(this, null, Type.DRAWING_CLEARED);
 		fire(event);
+	}
+
+	@Override
+	public void figureChanged(FigureEvent e) {
+		DrawModelEvent event = new DrawModelEvent(this, e.getFigure(), Type.FIGURE_CHANGED);
+		fire(event);
+		
 	}
 
 }
