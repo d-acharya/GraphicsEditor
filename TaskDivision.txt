@@ -9,5 +9,6 @@ Dinesh
 
 
 
-
+To do:
+1. Find out why rectangles are displayed too late and fix this.
 
