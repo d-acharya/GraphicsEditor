@@ -155,7 +155,7 @@ public class DrawModelTest {
 
 	@Test
 	public void testRemoveFigure3() {
-		List<FigureListener> listeners = new LinkedList<>();
+		final List<FigureListener> listeners = new LinkedList<>();
 		Figure f = new TestFigure() {
 			public void addFigureListener(FigureListener l) {
 				listeners.add(l);

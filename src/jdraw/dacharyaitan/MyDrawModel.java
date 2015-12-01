@@ -11,12 +11,13 @@ import jdraw.framework.DrawCommandHandler;
 import jdraw.framework.DrawModel;
 import jdraw.framework.DrawModelListener;
 import jdraw.framework.Figure;
+import jdraw.std.EmptyDrawCommandHandler;
 
 /**
  * Provide a standard behavior for the drawing model. This class initially does not implement the methods
  * in a proper way.
  * It is part of the course assignments to do so.
- * @author TODO add your name here
+ * @author Dinesh Acharya and Isabelle Tan
  *
  */
 public class MyDrawModel implements DrawModel {
