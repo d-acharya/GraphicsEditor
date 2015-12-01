@@ -12,6 +12,8 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import jdraw.framework.DrawModelEvent;
+import jdraw.framework.DrawModelListener;
 import jdraw.framework.Figure;
 import jdraw.framework.FigureEvent;
 import jdraw.framework.FigureHandle;
@@ -61,13 +63,15 @@ public class Rect implements Figure {
 	@Override
 	public void setBounds(Point origin, Point corner) {
 		rectangle.setFrameFromDiagonal(origin, corner);
-		// TODO notification of change
+		FigureEvent event = new FigureEvent(this);
+		fire(event);
 	}
 
 	@Override
 	public void move(int dx, int dy) {
 		rectangle.setLocation(rectangle.x + dx, rectangle.y + dy);
-		// TODO notification of change
+		FigureEvent event = new FigureEvent(this);
+		fire(event);
 	}
 
 	@Override
@@ -97,6 +101,13 @@ public class Rect implements Figure {
 	@Override
 	public void removeFigureListener(FigureListener listener) {
 		listeners.remove(listener);
+	}
+	
+	// Fire an event, i.e. notify all listeners
+	public void fire(FigureEvent e){
+		for(FigureListener listener : listeners){
+			listener.figureChanged(e);
+		}
 	}
 
 	@Override

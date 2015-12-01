@@ -59,8 +59,8 @@ public class MyDrawModel implements DrawModel {
 	
 	// Fire an event, i.e. notify all listeners
 	public void fire(DrawModelEvent e){
-		for (int i=0; i<listeners.size(); i++){
-			listeners.get(i).modelChanged(e);
+		for(DrawModelListener listener : listeners){
+			listener.modelChanged(e);
 		}
 	}
 
@@ -85,8 +85,8 @@ public class MyDrawModel implements DrawModel {
 	@Override
 	// Use removeFigure() instead of clear to notify the listeners for each removed figure.
 	public void removeAllFigures() {
-		for (int i=0; i< figures.size(); i++){
-			removeFigure(figures.get(i));
+		for (Figure fig : figures){
+			removeFigure(fig);
 		}
 	}
 
